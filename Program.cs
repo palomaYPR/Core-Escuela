@@ -12,7 +12,7 @@ namespace Etapa1
             var escuela = new Escuela("Platzi Academy", 2012, TiposEscuela.Primaria,
                         ciudad: "Bogotá", pais: "Colombia"
                         );
-            
+            // comment
             escuela.Cursos = new List<Curso>(){
                         new Curso(){ Nombre = "101", Jornada = TiposJornada.Mañana },
                         new Curso() {Nombre = "201", Jornada = TiposJornada.Mañana},
