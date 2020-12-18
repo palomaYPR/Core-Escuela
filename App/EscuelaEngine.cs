@@ -7,6 +7,11 @@ namespace CoreEscuela
 {
     public class EscuelaEngine
     {
+        public EscuelaEngine(Escuela escuela)
+        {
+            this.Escuela = escuela;
+
+        }
         public Escuela Escuela { get; set; }
 
         public EscuelaEngine()
@@ -21,13 +26,39 @@ namespace CoreEscuela
                         );
             // comment
             CargarCursos();
-            CargarAsignaturas();            
+            CargarAsignaturas();
             CargarEvaluaciones();
         }
 
         private void CargarEvaluaciones()
         {
-            throw new NotImplementedException();
+            Random rnd = new Random();
+            foreach (var curso in Escuela.Cursos)
+            {
+                foreach (var alum in curso.Alumnos)
+                {
+                    alum.evaluacion = new List<Evaluaciones>();                    
+
+                    foreach (var asig in curso.Asignaturas)
+                    {
+
+                        for (int i = 0; i < 5; i++)
+                        {                               
+                            var evaluacion = new Evaluaciones
+                            {
+                                Nombre = asig.Nombre,
+                                Alumno = alum,
+                                Asignatura = asig,
+                                Nota = (float)rnd.NextDouble()*5                                
+                            };                              
+                            
+                            System.Console.WriteLine($"Evaluación N°{i+1} de: {evaluacion.Nombre} Alumno: {evaluacion.Alumno.Nombre} Asignatura: {evaluacion.Asignatura.Nombre} Nota: {evaluacion.Nota}");
+
+                            alum.evaluacion.Add(evaluacion);
+                        }
+                    }
+                }
+            }
         }
 
         private void CargarAsignaturas()
@@ -52,10 +83,10 @@ namespace CoreEscuela
             string[] nombre2 = { "Freddy", "Anabel", "Rick", "Murty", "Silvana", "Diomedes", "Nicomedes", "Teodoro" };
 
             var listaAlumnos = from n1 in nombre1
-                                from n2 in nombre2
-                                from a in apellido1
-                                select new Alumno{ Nombre = $"{n1} {n2} {a}"};
-            return listaAlumnos.OrderBy( (al)=> al.UniqueId ).Take(cantidad).ToList();
+                               from n2 in nombre2
+                               from a in apellido1
+                               select new Alumno { Nombre = $"{n1} {n2} {a}" };
+            return listaAlumnos.OrderBy((al) => al.UniqueId).Take(cantidad).ToList();
         }
 
         private void CargarCursos()
@@ -69,11 +100,11 @@ namespace CoreEscuela
                         new Curso{Nombre = "501", Jornada = TiposJornada.Tarde}
             };
 
-            Random rnd = new Random();            
+            Random rnd = new Random();
 
             foreach (var c in Escuela.Cursos)
-            {                
-                int cantRandom = rnd.Next(5,30);
+            {
+                int cantRandom = rnd.Next(5, 30);
                 c.Alumnos = GenerarAlumnosAlAzar(cantRandom);
             }
         }
