@@ -9,17 +9,17 @@ namespace CoreEscuela
         static void Main(string[] args)
         {
             var engine = new EscuelaEngine();  
-            engine.Inicializar();        
-            
-            Printer.DibujaLinea();
+            engine.Inicializar();  
+            Printer.WriteTitle("BIENVENIDOS");
+            Printer.Beep(10000, repeticion:5);
+                        
             ImprimirCursosEscuela(engine.Escuela);
         }
 
         private static void ImprimirCursosEscuela(Escuela escuela)
         {
-            Printer.DibujaLinea(20);
-            WriteLine("Cursos de la Escuela");
-            Printer.DibujaLinea(20);
+            
+            Printer.WriteTitle("Cursos de la Escuela");            
 
             if (escuela?.Cursos != null)
             {
